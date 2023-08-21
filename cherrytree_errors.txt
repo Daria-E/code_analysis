@@ -1,0 +1,200 @@
+[1msandbox/gtkmm/sqlite3.cc:200:12: [31mwarning:[39m Uninitialized variables: node_properties.is_ro, node_properties.is_bold, node_properties.fg_override [uninitvar][0m
+    return node_properties;
+           ^
+[1msandbox/gtkmm/sqlite3.cc:171:150: [2mnote:[0m Assuming condition is false
+    if(sqlite3_prepare_v2(mp_db, "SELECT name, syntax, tags, is_ro, is_richtxt, ts_creation, ts_lastsave FROM node WHERE node_id=?", -1, &p_stmt, 0) != SQLITE_OK)
+                                                                                                                                                     ^
+[1msandbox/gtkmm/sqlite3.cc:177:29: [2mnote:[0m Assuming condition is false
+    if(sqlite3_step(p_stmt) == SQLITE_ROW)
+                            ^
+[1msandbox/gtkmm/sqlite3.cc:200:12: [2mnote:[0m Uninitialized variables: node_properties.is_ro, node_properties.is_bold, node_properties.fg_override
+    return node_properties;
+           ^
+[1msandbox/gtkmm/sqlite3.cc:200:12: [31merror:[39m Uninitialized struct member: node_properties.is_ro [uninitStructMember][0m
+    return node_properties;
+           ^
+[1msandbox/gtkmm/sqlite3.cc:200:12: [31merror:[39m Uninitialized struct member: node_properties.is_bold [uninitStructMember][0m
+    return node_properties;
+           ^
+[1msandbox/gtkmm/sqlite3.cc:200:12: [31merror:[39m Uninitialized struct member: node_properties.fg_override [uninitStructMember][0m
+    return node_properties;
+           ^
+[1msrc/7za/CPP/7zip/Archive/Cab/CabHandler.cpp:612:3: [31merror:[39m Non-local variable 'm_ExtractStatuses' will use pointer to local variable 'extractStatuses'. [danglingLifetime][0m
+  m_ExtractStatuses = extractStatuses;
+  ^
+[1msrc/7za/CPP/7zip/Archive/Cab/CabHandler.cpp:1041:43: [2mnote:[0m Address of variable taken here.
+    cabFolderOutStream->Init(&m_Database, &extractStatuses, startIndex2,
+                                          ^
+[1msrc/7za/CPP/7zip/Archive/Cab/CabHandler.cpp:1041:43: [2mnote:[0m Calling function 'Init', 2nd argument '&extractStatuses' value is lifetime=extractStatuses
+    cabFolderOutStream->Init(&m_Database, &extractStatuses, startIndex2,
+                                          ^
+[1msrc/7za/CPP/7zip/Archive/Cab/CabHandler.cpp:960:23: [2mnote:[0m Variable created here.
+  CRecordVector<bool> extractStatuses;
+                      ^
+[1msrc/7za/CPP/7zip/Archive/Cab/CabHandler.cpp:612:3: [2mnote:[0m Non-local variable 'm_ExtractStatuses' will use pointer to local variable 'extractStatuses'.
+  m_ExtractStatuses = extractStatuses;
+  ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:405:3: [31merror:[39m Non-local variable 'Size32' will use object that points to local variable 'buf'. [danglingLifetime][0m
+  Size32 = Get32(buf + 4);
+  ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:404:9: [2mnote:[0m Array decayed to pointer here.
+  Crc = Get32(buf);
+        ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:402:8: [2mnote:[0m Variable created here.
+  Byte buf[8];
+       ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:405:3: [2mnote:[0m Non-local variable 'Size32' will use object that points to local variable 'buf'.
+  Size32 = Get32(buf + 4);
+  ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:414:3: [31merror:[39m Non-local variable 'Size32' will use object that points to local variable 'buf'. [danglingLifetime][0m
+  Size32 = Get32(buf + 4);
+  ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:413:9: [2mnote:[0m Array decayed to pointer here.
+  Crc = Get32(buf);
+        ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:411:8: [2mnote:[0m Variable created here.
+  Byte buf[8];
+       ^
+[1msrc/7za/CPP/7zip/Archive/GzHandler.cpp:414:3: [2mnote:[0m Non-local variable 'Size32' will use object that points to local variable 'buf'.
+  Size32 = Get32(buf + 4);
+  ^
+[1msrc/7za/CPP/7zip/Archive/PpmdHandler.cpp:73:3: [31merror:[39m Non-local variable 'Time' will use object that points to local variable 'h'. [danglingLifetime][0m
+  Time = GetUi32(h + 12);
+  ^
+[1msrc/7za/CPP/7zip/Archive/PpmdHandler.cpp:72:12: [2mnote:[0m Array decayed to pointer here.
+  Attrib = GetUi32(h + 4);
+           ^
+[1msrc/7za/CPP/7zip/Archive/PpmdHandler.cpp:68:8: [2mnote:[0m Variable created here.
+  Byte h[kHeaderSize];
+       ^
+[1msrc/7za/CPP/7zip/Archive/PpmdHandler.cpp:73:3: [2mnote:[0m Non-local variable 'Time' will use object that points to local variable 'h'.
+  Time = GetUi32(h + 12);
+  ^
+[1msrc/7za/CPP/7zip/Archive/Zip/ZipHandler.cpp:802:11: [31merror:[39m Memory leak: mi.Coder [memleak][0m
+          return S_OK;
+          ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:682:3: [31merror:[39m Non-local variable 'm_OutStreamCurrent' will use pointer to local variable 'outStreamTemp'. [danglingLifetime][0m
+  m_OutStreamCurrent = &outStreamTemp;
+  ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:682:24: [2mnote:[0m Address of variable taken here.
+  m_OutStreamCurrent = &outStreamTemp;
+                       ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:679:20: [2mnote:[0m Variable created here.
+  CMsbfEncoderTemp outStreamTemp;
+                   ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:682:3: [2mnote:[0m Non-local variable 'm_OutStreamCurrent' will use pointer to local variable 'outStreamTemp'.
+  m_OutStreamCurrent = &outStreamTemp;
+  ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:559:39: [31mwarning:[39m Possible null pointer dereference: codes [nullPointer][0m
+        m_OutStreamCurrent->WriteBits(codes[symbol], lens[symbol]);
+                                      ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:544:29: [2mnote:[0m Assignment 'codes=0', assigned value is 0
+      const UInt32 *codes = 0;
+                            ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:551:23: [2mnote:[0m Assuming condition is false
+        if (groupSize == 0)
+                      ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:559:39: [2mnote:[0m Null pointer dereference
+        m_OutStreamCurrent->WriteBits(codes[symbol], lens[symbol]);
+                                      ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:559:54: [31mwarning:[39m Possible null pointer dereference: lens [nullPointer][0m
+        m_OutStreamCurrent->WriteBits(codes[symbol], lens[symbol]);
+                                                     ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:543:26: [2mnote:[0m Assignment 'lens=0', assigned value is 0
+      const Byte *lens = 0;
+                         ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:551:23: [2mnote:[0m Assuming condition is false
+        if (groupSize == 0)
+                      ^
+[1msrc/7za/CPP/7zip/Compress/BZip2Encoder.cpp:559:54: [2mnote:[0m Null pointer dereference
+        m_OutStreamCurrent->WriteBits(codes[symbol], lens[symbol]);
+                                                     ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:83:3: [31merror:[39m Non-local variable '_remSize' will use object that points to local variable 'temp'. [danglingLifetime][0m
+  _remSize = GetUi32(temp);
+  ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:68:13: [2mnote:[0m Array decayed to pointer here.
+  _ivSize = GetUi16(temp);
+            ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:82:3: [2mnote:[0m Assuming condition is false
+  RINOK(ReadStream_FALSE(inStream, temp, 4));
+  ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:66:8: [2mnote:[0m Variable created here.
+  Byte temp[4];
+       ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:83:3: [2mnote:[0m Non-local variable '_remSize' will use object that points to local variable 'temp'.
+  _remSize = GetUi32(temp);
+  ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:85:7: [31merror:[39m Non-local variable '_remSize' will use object that points to local variable 'temp'. [danglingLifetime][0m
+  if (_remSize < 16 || _remSize > (1 << 18))
+      ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:68:13: [2mnote:[0m Array decayed to pointer here.
+  _ivSize = GetUi16(temp);
+            ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:82:3: [2mnote:[0m Assuming condition is false
+  RINOK(ReadStream_FALSE(inStream, temp, 4));
+  ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:66:8: [2mnote:[0m Variable created here.
+  Byte temp[4];
+       ^
+[1msrc/7za/CPP/7zip/Crypto/ZipStrong.cpp:85:7: [2mnote:[0m Non-local variable '_remSize' will use object that points to local variable 'temp'.
+  if (_remSize < 16 || _remSize > (1 << 18))
+      ^
+[1msandbox/gtkmm/columnedit.cc:34:1: [31merror:[39m The one definition rule is violated, different classes/structs have the same name 'CtColumnEdit' [ctuOneDefinitionRuleViolation][0m
+class CtColumnEdit
+^
+[1msrc/ct/ct_column_edit.h:34:1: [2mnote:[0m The one definition rule is violated, different classes/structs have the same name 'CtColumnEdit'
+class CtColumnEdit
+^
+[1msandbox/gtkmm/columnedit.cc:34:1: [2mnote:[0m The one definition rule is violated, different classes/structs have the same name 'CtColumnEdit'
+class CtColumnEdit
+^
+[1mtests/tests_exports.cpp:28:1: [31merror:[39m The one definition rule is violated, different classes/structs have the same name 'TestCtApp' [ctuOneDefinitionRuleViolation][0m
+class TestCtApp : public CtApp
+^
+[1mtests/tests_read_write.cpp:29:1: [2mnote:[0m The one definition rule is violated, different classes/structs have the same name 'TestCtApp'
+class TestCtApp : public CtApp
+^
+[1mtests/tests_exports.cpp:28:1: [2mnote:[0m The one definition rule is violated, different classes/structs have the same name 'TestCtApp'
+class TestCtApp : public CtApp
+^
+[1msrc/7za/CPP/7zip/Archive/7z/7zUpdate.cpp:423:3: [31merror:[39m Null pointer dereference: inStream [ctunullpointer][0m
+  RINOK(inStream->Seek(position, STREAM_SEEK_SET, 0));
+  ^
+[1msrc/7za/CPP/7zip/Archive/7z/7zHandlerOut.cpp:554:15: [2mnote:[0m Calling function Update, 1st argument is null
+  res = Update(
+              ^
+[1msrc/7za/CPP/7zip/Archive/7z/7zUpdate.cpp:1560:5: [2mnote:[0m Calling function WriteRange, 1st argument is null
+    RINOK(WriteRange(inStream, seqOutStream, 0, startBlockSize, NULL));
+    ^
+[1msrc/7za/CPP/7zip/Archive/7z/7zUpdate.cpp:423:3: [2mnote:[0m Dereferencing argument inStream that is null
+  RINOK(inStream->Seek(position, STREAM_SEEK_SET, 0));
+  ^
+[1msrc/7za/C/XzEnc.c:57:19: [31merror:[39m Using argument p that points at uninitialized variable block [ctuuninitvar][0m
+  header[pos++] = p->flags;
+                  ^
+[1msrc/7za/C/XzEnc.c:458:5: [2mnote:[0m Calling function XzBlock_WriteHeader, 1st argument is uninitialized
+    RINOK(XzBlock_WriteHeader(&block, &seqSizeOutStream.p));
+    ^
+[1msrc/7za/C/XzEnc.c:57:19: [2mnote:[0m Using argument p
+  header[pos++] = p->flags;
+                  ^
+[1msrc/7za/CPP/7zip/UI/Common/Extract.cpp:238:3: [31merror:[39m Using argument st that points at uninitialized variable stat [ctuuninitvar][0m
+  st.Clear();
+  ^
+[1msrc/7za/CPP/7zip/UI/Console/Main.cpp:644:30: [2mnote:[0m Calling function Extract, 12th argument is uninitialized
+        hresultMain = Extract(
+                             ^
+[1msrc/7za/CPP/7zip/UI/Common/Extract.cpp:238:3: [2mnote:[0m Using argument st
+  st.Clear();
+  ^
+[1msrc/7za/CPP/myWindows/wine_date_and_time.cpp:370:13: [31merror:[39m Using argument tfTimeFields that points at uninitialized variable tf [ctuuninitvar][0m
+        if( tfTimeFields->Milliseconds< 0 || tfTimeFields->Milliseconds > 999 ||
+            ^
+[1msrc/7za/CPP/myWindows/wine_date_and_time.cpp:428:22: [2mnote:[0m Calling function RtlTimeFieldsToTime, 1st argument is uninitialized
+  RtlTimeFieldsToTime(&tf, &t);
+                     ^
+[1msrc/7za/CPP/myWindows/wine_date_and_time.cpp:370:13: [2mnote:[0m Using argument tfTimeFields
+        if( tfTimeFields->Milliseconds< 0 || tfTimeFields->Milliseconds > 999 ||
+            ^
+[1mnofile:0:0: [31minformation:[39m Too many #ifdef configurations - cppcheck only checks 12 configurations. Use --force to check all configurations. For more details, use --enable=information. [toomanyconfigs][0m
+
