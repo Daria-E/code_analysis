@@ -1,0 +1,232 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cppcheck - HTML report - CHERRYTREE</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+    <script>
+      function getStyle(el, styleProp) {
+        var y;
+
+        if (el.currentStyle) {
+          y = el.currentStyle[styleProp];
+        } else if (window.getComputedStyle) {
+          y = document.defaultView.getComputedStyle(el, null).getPropertyValue(styleProp);
+        }
+
+        return y;
+      }
+
+      function toggle() {
+        var el = this.expandable_content;
+        var mark = this.expandable_marker;
+
+        if (el.style.display === "block") {
+          el.style.display = "none";
+          mark.textContent = "[+]";
+        } else {
+          el.style.display = "block";
+          mark.textContent = "[-]";
+        }
+      }
+
+      function initExpandables() {
+        var elements = document.querySelectorAll(".expandable");
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          var el = elements[i];
+          var clickable = el.querySelector("span");
+          var marker = clickable.querySelector(".marker");
+          var content = el.querySelector(".content");
+          var width = clickable.clientWidth - parseInt(getStyle(content, "padding-left")) - parseInt(getStyle(content, "padding-right"));
+          content.style.width = width + "px";
+          clickable.expandable_content = content;
+          clickable.expandable_marker = marker;
+          clickable.addEventListener("click", toggle);
+        }
+      }
+
+      function toggleDisplay(cb) {
+        var elements = document.querySelectorAll("." + cb.id);
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          elements[i].classList.toggle("id-filtered", !cb.checked);
+        }
+
+        updateFileRows();
+      }
+
+      function toggleSeverity(cb) {
+        cb.parentElement.classList.toggle("unchecked", !cb.checked);
+        var elements = document.querySelectorAll(".sev_" + cb.id);
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          elements[i].classList.toggle("severity-filtered", !cb.checked);
+        }
+
+        updateFileRows();
+      }
+
+      function toggleTool(cb) {
+        cb.parentElement.classList.toggle("unchecked", !cb.checked);
+
+        var elements;
+        if (cb.id == "clang-tidy")
+            elements = document.querySelectorAll("[class^=clang-tidy-]");
+        else
+            elements = document.querySelectorAll(".issue:not([class^=clang-tidy-])");
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          elements[i].classList.toggle("tool-filtered", !cb.checked);
+        }
+
+        updateFileRows();
+      }
+
+      function toggleAll() {
+        var elements = document.querySelectorAll(".idToggle");
+
+        // starting from 1 since 0 is the "toggle all" input
+        for (var i = 1, len = elements.length; i < len; i++) {
+          var changed = elements[i].checked != elements[0].checked;
+          if (changed) {
+            elements[i].checked = elements[0].checked;
+            toggleDisplay(elements[i]);
+          }
+        }
+      }
+
+      function filterFile(filter) {
+        var elements = document.querySelectorAll(".fileEntry");
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          var visible = elements[i].querySelector("tr").querySelector("td").textContent.toLowerCase().includes(filter.toLowerCase());
+          elements[i].classList.toggle("text-filtered", !visible);
+        }
+      }
+
+      function filterText(text) {
+        filter = text.toLowerCase();
+        var elements = document.querySelectorAll(".issue");
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          var visible = false;
+          var fields = elements[i].querySelectorAll("td");
+          for (var n = 0, num = fields.length; n < num; n++) {
+            if (fields[n].textContent.toLowerCase().includes(filter)) {
+              visible = true;
+              break;
+            }
+          }
+          elements[i].classList.toggle("text-filtered", !visible);
+        }
+
+        updateFileRows();
+      }
+
+      function updateFileRows(element) {
+        var elements = document.querySelectorAll(".fileEntry");
+
+        for (var i = 0, len = elements.length; i < len; i++) {
+          var visible = elements[i].querySelector(".issue:not(.id-filtered):not(.severity-filtered):not(.tool-filtered):not(.text-filtered)");
+          elements[i].classList.toggle("file-filtered", !visible);
+        }
+      }
+
+      window.addEventListener("load", initExpandables);
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+    <div id="header" class="header">
+      <h1>Cppcheck report - CHERRYTREE</h1>
+      <div id="filters">
+
+        <label class="checkBtn"><input type="checkbox" onclick="toggleSeverity(this)" id="error"checked/>error</label>
+        <label class="checkBtn"><input type="checkbox" onclick="toggleSeverity(this)" id="warning"checked/>warning</label>
+        <label class="checkBtn disabled"><input type="checkbox" onclick="toggleSeverity(this)" id="portability"disabled/>portability</label>
+        <label class="checkBtn disabled"><input type="checkbox" onclick="toggleSeverity(this)" id="performance"disabled/>performance</label>
+        <label class="checkBtn disabled"><input type="checkbox" onclick="toggleSeverity(this)" id="style"disabled/>style</label>
+        <label class="checkBtn"><input type="checkbox" onclick="toggleSeverity(this)" id="information"checked/>information</label>
+        | 
+        <label class="checkBtn"><input type="checkbox" onclick="toggleTool(this)" id="cppcheck"checked/>cppcheck</label>
+        <label class="checkBtn disabled"><input type="checkbox" onclick="toggleTool(this)" id="clang-tidy"disabled/>clang-tidy</label>
+        | 
+        <label class="severityHeader">File: <input type="text" oninput="filterFile(this.value)"/></label>
+        <label class="severityHeader">Filter: <input type="text" oninput="filterText(this.value)"/></label>
+      </div>
+
+    </div>
+
+    <div id="menu_index">
+     <p><a href="index.html">Defect summary</a> </p>
+
+       <label><input type="checkbox" class="idToggle" onclick="toggleAll()" checked> Toggle all</label>
+       <table>
+           <tr><th>Show</th><th>#</th><th>Defect ID</th></tr>
+            <tr><td><input type="checkbox" class="idToggle" onclick="toggleDisplay(this)" id="danglingLifetime" name="danglingLifetime" checked></td><td>7</td><td>danglingLifetime</td></tr>
+            <tr><td><input type="checkbox" class="idToggle" onclick="toggleDisplay(this)" id="ctuuninitvar" name="ctuuninitvar" checked></td><td>3</td><td>ctuuninitvar</td></tr>
+            <tr><td><input type="checkbox" class="idToggle" onclick="toggleDisplay(this)" id="nullPointer" name="nullPointer" checked></td><td>2</td><td>nullPointer</td></tr>
+            <tr><td><input type="checkbox" class="idToggle" onclick="toggleDisplay(this)" id="ctunullpointer" name="ctunullpointer" checked></td><td>1</td><td>ctunullpointer</td></tr>
+            <tr><td><input type="checkbox" class="idToggle" onclick="toggleDisplay(this)" id="memleak" name="memleak" checked></td><td>1</td><td>memleak</td></tr>
+            <tr><td><input type="checkbox" class="idToggle" onclick="toggleDisplay(this)" id="toomanyconfigs" name="toomanyconfigs" checked></td><td>1</td><td>toomanyconfigs</td></tr>
+           <tr><td></td><td>15</td><td>total</td></tr>
+       </table>
+       <p><a href="stats.html">Statistics</a></p>
+    </div>
+    <div id="content_index">
+
+       <table class="summaryTable">
+       <tr><th>Line</th><th>Id</th><th>CWE</th><th>Severity</th><th>Message</th></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="10.html"></a></td></tr>
+         <tr class="toomanyconfigs sev_information issue"><td></td><td>toomanyconfigs</td><td><a href="https://cwe.mitre.org/data/definitions/398.html">398</a></td><td>information</td><td>Too many #ifdef configurations - cppcheck only checks 12 configurations. Use --force to check all configurations. For more details, use --enable=information.</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="7.html">src/7za/C/XzEnc.c</a></td></tr>
+         <tr class="ctuuninitvar sev_error issue"><td><a href="7.html#line-57">57</a></td><td>ctuuninitvar</td><td><a href="https://cwe.mitre.org/data/definitions/457.html">457</a></td><td>error</td><td class="error">Using argument p that points at uninitialized variable block</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="6.html">src/7za/CPP/7zip/Archive/7z/7zUpdate.cpp</a></td></tr>
+         <tr class="ctunullpointer sev_error issue"><td><a href="6.html#line-423">423</a></td><td>ctunullpointer</td><td><a href="https://cwe.mitre.org/data/definitions/476.html">476</a></td><td>error</td><td class="error">Null pointer dereference: inStream</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="0.html">src/7za/CPP/7zip/Archive/Cab/CabHandler.cpp</a></td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="0.html#line-612">612</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;m_ExtractStatuses&apos; will use pointer to local variable &apos;extractStatuses&apos;.</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="1.html">src/7za/CPP/7zip/Archive/GzHandler.cpp</a></td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="1.html#line-405">405</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;Size32&apos; will use object that points to local variable &apos;buf&apos;.</td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="1.html#line-414">414</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;Size32&apos; will use object that points to local variable &apos;buf&apos;.</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="2.html">src/7za/CPP/7zip/Archive/PpmdHandler.cpp</a></td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="2.html#line-73">73</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;Time&apos; will use object that points to local variable &apos;h&apos;.</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="3.html">src/7za/CPP/7zip/Archive/Zip/ZipHandler.cpp</a></td></tr>
+         <tr class="memleak sev_error issue"><td><a href="3.html#line-802">802</a></td><td>memleak</td><td><a href="https://cwe.mitre.org/data/definitions/401.html">401</a></td><td>error</td><td class="error">Memory leak: mi.Coder</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="4.html">src/7za/CPP/7zip/Compress/BZip2Encoder.cpp</a></td></tr>
+         <tr class="nullPointer sev_warning issue"><td><a href="4.html#line-559">559</a></td><td>nullPointer</td><td><a href="https://cwe.mitre.org/data/definitions/476.html">476</a></td><td>warning</td><td class="warning">Possible null pointer dereference: codes</td></tr>
+         <tr class="nullPointer sev_warning issue"><td><a href="4.html#line-559">559</a></td><td>nullPointer</td><td><a href="https://cwe.mitre.org/data/definitions/476.html">476</a></td><td>warning</td><td class="warning">Possible null pointer dereference: lens</td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="4.html#line-682">682</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;m_OutStreamCurrent&apos; will use pointer to local variable &apos;outStreamTemp&apos;.</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="5.html">src/7za/CPP/7zip/Crypto/ZipStrong.cpp</a></td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="5.html#line-83">83</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;_remSize&apos; will use object that points to local variable &apos;temp&apos;.</td></tr>
+         <tr class="danglingLifetime sev_error issue"><td><a href="5.html#line-85">85</a></td><td>danglingLifetime</td><td><a href="https://cwe.mitre.org/data/definitions/562.html">562</a></td><td>error</td><td class="error">Non-local variable &apos;_remSize&apos; will use object that points to local variable &apos;temp&apos;.</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="8.html">src/7za/CPP/7zip/UI/Common/Extract.cpp</a></td></tr>
+         <tr class="ctuuninitvar sev_error issue"><td><a href="8.html#line-238">238</a></td><td>ctuuninitvar</td><td><a href="https://cwe.mitre.org/data/definitions/457.html">457</a></td><td>error</td><td class="error">Using argument st that points at uninitialized variable stat</td></tr>
+      <tbody class="fileEntry">
+       <tr><td colspan="5"><a href="9.html">src/7za/CPP/myWindows/wine_date_and_time.cpp</a></td></tr>
+         <tr class="ctuuninitvar sev_error issue"><td><a href="9.html#line-370">370</a></td><td>ctuuninitvar</td><td><a href="https://cwe.mitre.org/data/definitions/457.html">457</a></td><td>error</td><td class="error">Using argument tfTimeFields that points at uninitialized variable tf</td></tr>
+      </tbody>
+       </table>
+    </div>
+    <div id="footer" class="footer">
+      <p>
+        Created by Cppcheck 2.10 (<a href="https://cppcheck.sourceforge.io">Sourceforge</a>, <a href="irc://irc.freenode.net/cppcheck">IRC</a>)
+      </p>
+    </div>
+    </div>
+  </body>
+</html>
