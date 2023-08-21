@@ -19,6 +19,6 @@ Finally - compiled for arm64 with `aarch64-linux-gnu-g++ main.cpp -o calc_arm`. 
 
 [CherryTree](https://github.com/giuspen/cherrytree) is a note-taking app that supports nested notes, attachments, TeX, images, charts and more. It's considerably more complex than TinyCalculator...
 
-Similarly to the previous time, I retrieved the source code and ran cppcheck. The error log (`cherrytree_errors.txt`) is attached. 
+Similarly to the previous time, I retrieved the source code and ran cppcheck. The error log (`cherrytree_errors.html`) is attached.
 
 Sadly, I failed to compile the app for ARM64. While the cross-compiler is available, it seems some dependencies of the program don't play nicely with cross-compiling (namely the FMT library, and other TeX-related dependencies). This was expected, as CherryTree's documentation highly recommends building on the target arch. This can be accomplished by running an ARM64 VM on the x86_64 host, and building there.
